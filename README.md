@@ -1,2 +1,2 @@
-# Guru-spring-data-jpa-jdbc
+# Guru-spring-data-jpa-jdbc-template
 Demo project for Spring Data JPA and JDBC Template
