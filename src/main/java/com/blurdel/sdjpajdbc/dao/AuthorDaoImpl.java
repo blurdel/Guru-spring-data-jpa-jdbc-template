@@ -29,16 +29,25 @@ public class AuthorDaoImpl implements AuthorDao {
 
 	@Override
 	public Author saveNew(Author author) {
-		return null;
+		template.update("insert into author (first_name, last_name) values (?,?)",
+				author.getFirstName(), author.getLastName());
+		
+		Long lastId = template.queryForObject("select LAST_INSERT_ID()", Long.class);
+
+		return this.getById(lastId);
 	}
 
 	@Override
 	public Author update(Author author) {
-		return null;
+		template.update("update author set first_name=?, last_name=? where id=?",
+				author.getFirstName(), author.getLastName(), author.getId());
+		
+		return this.getById(author.getId());
 	}
 
 	@Override
 	public void delete(Long id) {
+		template.update("delete from author where id=?", id);
 	}
 
 	private RowMapper<Author> getRowMapper() {
