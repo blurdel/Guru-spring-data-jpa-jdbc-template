@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.blurdel.sdjpajdbc.dao.AuthorDao;
@@ -36,8 +37,8 @@ class AuthorDaoIntegrationTest {
 		
 		authorDao.delete(saved.getId());
 		
-		// Verify an exception is thrown
-		assertThrows(EmptyResultDataAccessException.class, () -> {
+		// Verify an exception is thrown (EmptyResultDataAccessException -> TransientDataAccessResourceException)
+		assertThrows(TransientDataAccessResourceException.class, () -> {
 			authorDao.getById(saved.getId());
 		});
 		

@@ -18,12 +18,17 @@ public class AuthorDaoImpl implements AuthorDao {
 
 	@Override
 	public Author getById(Long id) {
-		return template.queryForObject("select * from author where id=?", getRowMapper(), id);
+		String sql = "select author.id as author_id, first_name, last_name, book.id as book_id, book.isbn as isbn, book.publisher, book.title from author\n" +
+                "left outer join book on author.id = book.author_id where author.id = ?";
+		
+//		return template.queryForObject("select * from author where id=?", getRowMapper(), id);
+		
+		return template.query(sql, new AuthorExtractor(), id);
 	}
 
 	@Override
 	public Author getByName(String firstName, String lastName) {
-		return template.queryForObject("select * from author where first_name=? and last_name=?", 
+		return template.queryForObject("select id as author_id, first_name, last_name, NULL as isbn from author where first_name=? and last_name=?", 
 				getRowMapper(), firstName, lastName);
 	}
 
