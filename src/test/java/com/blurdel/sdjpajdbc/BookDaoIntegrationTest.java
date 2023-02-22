@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.blurdel.sdjpajdbc.dao.BookDao;
 import com.blurdel.sdjpajdbc.dao.BookDaoImpl;
-import com.blurdel.sdjpajdbc.domain.Author;
 import com.blurdel.sdjpajdbc.domain.Book;
 
 @ActiveProfiles("mysql")
@@ -33,6 +32,7 @@ public class BookDaoIntegrationTest {
         book.setIsbn("1234");
         book.setPublisher("Self");
         book.setTitle("my book");
+        book.setAuthorId(1L);
         
         Book saved = bookDao.saveNew(book);
 
